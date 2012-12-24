@@ -4,7 +4,7 @@ test("'this' inside a method", function () {
 	var person = {
 		name: 'bob',
 		intro: function () {
-			return "Hello, my name is " + this.__;
+			return "Hello, my name is " + this.name;
 		} 
 	}
 	equals(person.intro(), "Hello, my name is bob");
@@ -22,7 +22,7 @@ test("'this' on unattached function", function () {
 	
 	// if the function is not called as an object property 'this' is the global context 
 	// (window in a browser)
-	window.__ = 'Peter';
+	window.name = 'Peter';
 	equals("Hello, my name is Peter", alias());
 });
 
@@ -35,7 +35,7 @@ test("'this' set explicitly", function () {
 	}
 
 	// calling a function with 'call' lets us assign 'this' explicitly
-	var message = person.intro.call({__: "Frank"});
+	var message = person.intro.call({this.name: "Frank"});
 	equals(message, "Hello, my name is Frank");
 });
 
